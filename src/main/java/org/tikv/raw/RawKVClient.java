@@ -40,11 +40,13 @@ import org.tikv.common.region.TiRegion;
 import org.tikv.common.util.BackOffFunction;
 import org.tikv.common.util.BackOffer;
 import org.tikv.common.util.ConcreteBackOffer;
+import org.tikv.common.util.NamedThreadPool;
 import org.tikv.kvproto.Kvrpcpb;
 
 public class RawKVClient implements AutoCloseable {
   private final RegionStoreClientBuilder clientBuilder;
   private final TiConfiguration conf;
+  private final ExecutorService executors;
   private final ExecutorCompletionService<Object> completionService;
   private static final Logger logger = Logger.getLogger(RawKVClient.class);
 
@@ -55,12 +57,15 @@ public class RawKVClient implements AutoCloseable {
     Objects.requireNonNull(clientBuilder, "clientBuilder is null");
     this.conf = conf;
     this.clientBuilder = clientBuilder;
-    ExecutorService executors = Executors.newFixedThreadPool(conf.getRawClientConcurrency());
+    this.executors = Executors.newFixedThreadPool(conf.getRawClientConcurrency());
     this.completionService = new ExecutorCompletionService<>(executors);
   }
 
   @Override
-  public void close() {}
+  public void close() throws InterruptedException {
+    executors.shutdown();
+    executors.awaitTermination(conf.getTimeout(), conf.getTimeoutUnit());
+  }
 
   /**
    * Put a raw key-value pair to TiKV
