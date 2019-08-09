@@ -57,7 +57,7 @@ public class RawKVClient implements AutoCloseable {
     Objects.requireNonNull(clientBuilder, "clientBuilder is null");
     this.conf = conf;
     this.clientBuilder = clientBuilder;
-    this.executors = Executors.newFixedThreadPool(conf.getRawClientConcurrency());
+    this.executors = Executors.newFixedThreadPool(conf.getRawClientConcurrency(), NamedThreadPool.create("raw-kv-client-%d"));
     this.completionService = new ExecutorCompletionService<>(executors);
   }
 
