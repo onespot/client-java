@@ -103,9 +103,9 @@ dependencies {
 	compile group: 'log4j', name: 'log4j', version:'1.2.17'
 	compile group: 'net.sf.trove4j', name: 'trove4j', version:'3.0.1'
 	compile group: 'com.sangupta', name: 'murmur', version:'1.0.0'
-	compile group: 'io.grpc', name: 'grpc-netty', version:'1.7.0'
-	compile group: 'io.grpc', name: 'grpc-protobuf', version:'1.7.0'
-	compile group: 'io.grpc', name: 'grpc-stub', version:'1.7.0'
+	compile group: 'io.grpc', name: 'grpc-netty', version:'1.22.1'
+	compile group: 'io.grpc', name: 'grpc-protobuf', version:'1.22.1'
+	compile group: 'io.grpc', name: 'grpc-stub', version:'1.22.1'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-annotations', version:'2.8.11'
 	compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version:'2.8.11.1'
 	compile(group: 'com.fasterxml.jackson.module', name: 'jackson-module-scala_2.11', version:'2.8.11') {
